@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC-3</title>
+</head>
+<body>
+    <form onsubmit="return false;">
+        <input type="number" id="one" placeholder="Number 1">
+        <input type="number" id="two" placeholder="Number 2">
+        <button onclick="add()">+</button>
+        <button onclick="sub()">-</button>
+        <button onclick="multi()">*</button>
+        <button onclick="div()">/</button>
+    </form>
+
+    <script>
+        function add() {
+            let a = document.getElementById("one").value;
+            let b = document.getElementById("two").value;
+            let c = parseFloat(a) + parseFloat(b);
+            alert("Sum: " + c);
+        }
+
+        function sub() {
+            let a = document.getElementById("one").value;
+            let b = document.getElementById("two").value;
+            let c = parseFloat(a) - parseFloat(b);
+            alert("Subtraction: " + c);
+        }
+
+        function multi() {
+            let a = document.getElementById("one").value;
+            let b = document.getElementById("two").value;
+            let c = parseFloat(a) * parseFloat(b);
+            alert("Multiplication: " + c);
+        }
+
+        function div() {
+            let a = document.getElementById("one").value;
+            let b = document.getElementById("two").value;
+            if (b != 0) {
+                let c = parseFloat(a) / parseFloat(b);
+                alert("Division: " + c);
+            } else {
+                alert("Error: Division by zero");
+            }
+        }
+    </script>
+</body>
+</html>

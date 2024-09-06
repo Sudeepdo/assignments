@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC-3</title>
+</head>
+<body>
+        <form action="">
+
+            <input type="number"id="one" placeholder="Number 1">
+
+            <input type="number" id="two" placeholder="Number 2 ">
+
+            <button type="button" onclick="add()">+</button>
+            <button type="button" onclick=Sub()">-</button>
+            <button type="button" onclick="Multi()">*</button>
+            <button type="button" onclick="div()">/</button>
+        </form>
+
+
+        <script>
+
+            function add(){
+
+           let     a=document.getElementById("one").value;
+
+            let    b=document.getElementById("two").value;
+
+            let    c=parseFloat(a)+parseFloat(b);
+
+                alert("Sum :"+c);}
+
+                function Sub(){
+
+                  let  a=document.getElementById("one").value;
+    
+                   let b=document.getElementById("two").value;
+
+    
+                 let   c=parseFloat(a)-parseFloat(b);
+    
+                    alert("Subtraction: " + c);}
+
+                    function Multi(){
+
+                     let   a=document.getElementById("one").value;
+        
+                     let   b=document.getElementById("two").value;
+        
+                     let   c=parseFloat(a)*parseFloat(b);
+        
+                        alert(`multiplication is ${c}`);}
+
+                        function div(){
+
+                          let  a=document.getElementById("one").value;
+            
+                          let  b=document.getElementById("two").value;
+            
+                         let   c=parseFloat(a)/parseFloat(b);
+            
+                            alert("div : "+c);}
+
+        </script>
+    
+</body>
+</html>
