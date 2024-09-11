@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuck Norris Jokes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #ff6347;
+            margin-bottom: 20px;
+        }
+
+        img {
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #004080;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        #chucks {
+            font-size: 1.5rem;
+            color: #333;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Chuck Norris Jokes</h1>
+    <img src="https://images.bauerhosting.com/legacy/empire-legacy/uploaded/chuck-norris-uzis.jpg?auto=format&w=1440&q=80" width="150" height="150" alt="Chuck Norris">
+
+    <!-- Buttons for categories inside a flexbox container -->
+    <div class="button-container">
+        <button onclick="jokes('animal')">Animal</button>
+        <button onclick="jokes('food')">Food</button>
+        <button onclick="jokes('career')">Career</button>
+        <button onclick="jokes('celebrity')">Celebrity</button>
+        <br>
+        <button onclick="jokes('fashion')">Fashion</button>
+        <button onclick="jokes('history')">History</button>
+        <button onclick="jokes('money')">Money</button>
+        <br>
+        <button onclick="jokes('movie')">Movie</button>
+        <button onclick="jokes('music')">Music</button>
+        <br>
+        <button onclick="jokes('travel')">Travel</button>
+    </div>
+
+    <p id="chucks"></p>
+
+    <script>
+        function jokes(category) {
+            fetch('https://api.chucknorris.io/jokes/random?category=' + category)
+            .then(response => response.json())
+            .then(json => document.getElementById("chucks").innerHTML = json.value)
+            .catch(error => console.log('Unable to reach URL: ' + error));
+        }
+    </script>
+</body>
+</html>

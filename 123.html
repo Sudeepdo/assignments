@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Grade and Activity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Add Grade and Activity</h2>
+        <form id="gradeForm">
+            <label for="activity">Activity Name:</label><br>
+            <input type="text" id="activity" name="activity" required><br><br>
+
+            <label for="grade">Grade (%):</label><br>
+            <input type="number" id="grade" name="grade" min="0" max="100" required><br><br>
+
+            <label for="weight">Weight (%):</label><br>
+            <input type="number" id="weight" name="weight" min="0" max="100" required><br><br>
+
+            <input type="submit" value="Add Activity">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('gradeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const activity = document.getElementById('activity').value;
+            const grade = document.getElementById('grade').value;
+            const weight = document.getElementById('weight').value;
+
+            alert(`Activity: ${activity}\nGrade: ${grade}%\nWeight: ${weight}%`);
+        });
+    </script>
+
+</body>
+</html>
+
