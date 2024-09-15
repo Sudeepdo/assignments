@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab-2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #9abaed61;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #b65e16;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        label {
+            margin-right: 10px;
+        }
+        #output {
+            margin-top: 20px;
+            border: 1px solid #738e24;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            min-height: 100px;
+            white-space: pre-wrap; 
+        }
+        
+    </style>
+</head>
+<body>
+
+    <button onclick="allNames()">ALL Names</button><br><br>
+    
+    <label for="health-number">Health Issues:</label>
+    <input type="number" id="health-number" placeholder="Enter issue number">
+    <button onclick="filterByHealthIssue()">Search</button><br><br>
+        
+    <input type="radio" id="imperial" name="unit" value="imperial" checked>
+    <label for="imperial">Imperial</label>
+    
+    <input type="radio" id="metric" name="unit" value="metric">
+    <label for="metric">Metric</label>
+    
+    <button onclick="showWeights()">Weight</button><br><br>
+    
+    <button onclick="showIntelligenceFriendly()">Intelligence-Friendly</button><br><br>
+    
+    <button onclick="averageIntelligence()">Average Intelligence</button><br><br>
+    
+    <button onclick="averageIntelligenceForChildFriendly()">Average Intelligence for Child Friendly</button><br><br>
+    
+    <p id="output"></p>
+    
+    <script>
+        const jsonUrl = "https://api.thecatapi.com/v1/breeds";
+        const outputElement = document.getElementById("output");
+        let catData = [];
+    
+        function allNames() {
+            fetch(jsonUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Something went wrong.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    catData = data;
+                    const totalCats = data.length;
+                    outputElement.innerHTML = `All Names (Total: ${totalCats}):<br><br>`; 
+            
+                    data.forEach(cat => {
+                        const lineBreak = document.createElement('br');
+                        outputElement.appendChild(document.createTextNode(cat.name));
+                        outputElement.appendChild(lineBreak);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
+        }
+            
+        function filterByHealthIssue() {
+            const issueNumber = (document.getElementById("health-number").value);
+            let catCount=0
+
+            fetch(jsonUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Something went wrong.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                catData = data;
+                const filteredCats = catData.filter(cat => cat.health_issues==issueNumber);
+            
+                let listOfCatName=""
+    
+                filteredCats.forEach((cat)=>{
+                    catCount++
+                    listOfCatName+=`<li> ${cat.name}</li>`
+                })
+    
+    let list =`<ul>${listOfCatName}
+        <li>Total number of cats: ${catCount}</li> 
+
+    </ul> `
+                document.getElementById("output").innerHTML=list
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+
+
+            
+        }
+    
+        function showWeights() {
+            const unit = document.querySelector('input[name="unit"]:checked').value;
+            fetch(jsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    outputElement.innerHTML = '';
+                    data.forEach(cat => {
+                        const weight = unit === 'imperial' ? cat.weight.imperial : cat.weight.metric;
+                        const lineBreak = document.createElement('br');
+                        outputElement.appendChild(document.createTextNode(`${cat.name}: ${weight}`));
+                        outputElement.appendChild(lineBreak);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
+        }
+
+        function showIntelligenceFriendly() {
+            fetch(jsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    outputElement.innerHTML = '';
+                    data.forEach(cat => {
+                        const lineBreak = document.createElement('br');
+                        outputElement.appendChild(document.createTextNode(`${cat.name} - I: ${cat.intelligence}, F: ${cat.child_friendly}`));
+                        outputElement.appendChild(lineBreak);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
+        }
+
+        function averageIntelligence() {
+            fetch(jsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const totalIntelligence = data.reduce((acc, cat) => acc + cat.intelligence, 0);
+                    const avgIntelligence = (totalIntelligence / data.length).toFixed(2);
+                    outputElement.innerHTML = `Average Intelligence: ${avgIntelligence}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
+        }
+
+        function averageIntelligenceForChildFriendly() {
+            fetch(jsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const friendlyCats = data.filter(cat => cat.child_friendly == 4);
+                    const totalIntelligence = friendlyCats.reduce((acc, cat) => acc + cat.intelligence, 0);
+                    const avgIntelligence = (totalIntelligence / friendlyCats.length).toFixed(2);
+                    outputElement.innerHTML = `Average Intelligence for Child Friendly Cats: ${avgIntelligence}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
+        }
+    </script>
+    
+</body>
+</html>
